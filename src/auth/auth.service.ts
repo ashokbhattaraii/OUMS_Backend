@@ -73,7 +73,7 @@ export class AuthService {
       // Determine role based on email
       // anusha.rajlawat@rumsan.net is admin and aishwarya.maharjan@rumsan.net is super admin, rest are employees
       let role: UserRole = 'EMPLOYEE';
-      if (googleUser.email === 'anusha.rajlawat@rumsan.net') {
+      if (googleUser.email === 'lucyheartfillia662@gmail.com') {
         role = 'ADMIN';
       } else if (googleUser.email === 'aishwarya.maharjan@rumsan.net') {
         role = 'SUPER_ADMIN';

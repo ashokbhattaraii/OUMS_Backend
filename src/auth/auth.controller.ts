@@ -25,11 +25,11 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
     try {
-      console.log('📥 Google user:', req.user.email);
+      console.log('Google user:', req.user.email);
 
       const result = await this.authService.googleLogin(req.user);
 
-      console.log('✅ Login successful');
+      console.log(' Login successful');
 
       res.cookie('access_token', result.access_token, {
         httpOnly: true,
@@ -42,7 +42,7 @@ export class AuthController {
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
       res.redirect(`${frontendUrl}/dashboard`);
     } catch (error) {
-      console.error('❌ Login error:', error.message);
+      console.error(' Login error:', error.message);
 
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
       res.redirect(

@@ -1,23 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { METHODS } from 'http';
 import { VersioningType } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import { use } from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.use(cookieParser());
+
   app.enableCors({
-    origin: process.env.ORIGIN_URL || 'http://localhost:3000',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000', // frontend URL
+    credentials: true, // required for cookies
   });
+
   app.setGlobalPrefix('api');
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: '1',
   });
-  await app.listen(process.env.PORT ?? 3001);
+
+  const port = process.env.PORT || 3001;
+  await app.listen(port);
+  console.log(`🚀 Backend running on port ${port}`);
 }
 bootstrap();

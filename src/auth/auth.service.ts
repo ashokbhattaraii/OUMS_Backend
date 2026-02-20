@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupabaseService } from '../supabase/supabase.service';
 
@@ -70,10 +71,13 @@ export class AuthService {
       console.log('➕ Creating user in public schema');
 
       // Determine role based on email
-      const role =
-        googleUser.email === 'aishwarya.maharjan@rumsan.net'
-          ? 'SUPER_ADMIN'
-          : 'EMPLOYEE';
+      // anusha.rajlawat@rumsan.net is admin and aishwarya.maharjan@rumsan.net is super admin, rest are employees
+      let role: UserRole = 'EMPLOYEE';
+      if (googleUser.email === 'anusha.rajlawat@rumsan.net') {
+        role = 'ADMIN';
+      } else if (googleUser.email === 'aishwarya.maharjan@rumsan.net') {
+        role = 'SUPER_ADMIN';
+      }
 
       user = await this.prisma.user.create({
         data: {

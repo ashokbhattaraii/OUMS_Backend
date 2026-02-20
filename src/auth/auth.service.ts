@@ -68,13 +68,20 @@ export class AuthService {
     // Now handle Prisma user record
     if (!user) {
       console.log('➕ Creating user in public schema');
+
+      // Determine role based on email
+      const role =
+        googleUser.email === 'aishwarya.maharjan@rumsan.net'
+          ? 'SUPER_ADMIN'
+          : 'EMPLOYEE';
+
       user = await this.prisma.user.create({
         data: {
           uid: supabaseUserId,
           email: googleUser.email,
           name: `${googleUser.firstName} ${googleUser.lastName}`,
           photoURL: googleUser.picture,
-          role: 'EMPLOYEE',
+          role: role,
           isActive: true,
           lastLoginAt: new Date(),
         },

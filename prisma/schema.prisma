@@ -132,10 +132,8 @@ model Request {
 
   // Supplies-specific fields
   SuppliesCategory SuppliesCategory?
-  itemName         String? // Name of item requested
-  quantity         Int? // Quantity needed
-  estimatedCost    Float? // Estimated cost
-  urgencyDate      DateTime? // When Supplies are needed by
+  itemName         String // Name of item requested
+  
 
   // Common fields
   attachments String[] // Array of file URLs (photos, documents)
